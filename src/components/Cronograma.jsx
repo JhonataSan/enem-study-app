@@ -38,7 +38,7 @@ export function Cronograma() {
   return (
     <div className="cronograma-container">
       <h2>Planeador de Estudos Semanal</h2>
-      <p className="subtitulo">Organize o que estudar em cada dia para manter o ritmo constante[cite: 3, 6].</p>
+      <p className="subtitulo">Organize o que estudar em cada dia para manter o ritmo constante.</p>
 
       <div className="dias-grid">
         {diasDaSemana.map((dia) => (

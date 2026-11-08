@@ -5,8 +5,16 @@ import { Pomodoro } from './components/Pomodoro';
 import './App.css';
 
 function App() {
-  const [abaPrincipal, setAbaPrincipal] = useState('conteudos'); // 'conteudos', 'cronograma' ou 'pomodoro'
+  const [abaPrincipal, setAbaPrincipal] = useState('conteudos');
   const [areaAtiva, setAreaAtiva] = useState(0);
+
+  const [tema, setTema] = useState(() => {
+    return localStorage.getItem('enem_tema') || 'light';
+  });
+
+  const [anotacoes, setAnotacoes] = useState(() => {
+    return localStorage.getItem('enem_anotacoes') || '';
+  });
 
   const [concluidos, setConcluidos] = useState(() => {
     const salvos = localStorage.getItem('enem_topicos_concluidos');
@@ -14,8 +22,21 @@ function App() {
   });
 
   useEffect(() => {
+    document.documentElement.setAttribute('data-theme', tema);
+    localStorage.setItem('enem_tema', tema);
+  }, [tema]);
+
+  useEffect(() => {
     localStorage.setItem('enem_topicos_concluidos', JSON.stringify(concluidos));
   }, [concluidos]);
+
+  useEffect(() => {
+    localStorage.setItem('enem_anotacoes', anotacoes);
+  }, [anotacoes]);
+
+  const alternarTema = () => {
+    setTema(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   const alternarTopico = (topico) => {
     setConcluidos(prev => ({
@@ -24,7 +45,6 @@ function App() {
     }));
   };
 
-  // Cálculo total de progresso do ENEM
   let totalTopicos = 0;
   enemTopics.forEach(area => {
     area.materias.forEach(materia => {
@@ -37,41 +57,52 @@ function App() {
 
   return (
     <div className="container">
+      <div className="header-top">
+        <span className="badge-extensao">Projeto de Extensão — UNINASSAU</span>
+        <button className="btn-tema" onClick={alternarTema}>
+          {tema === 'light' ? '🌙 Modo Escuro' : '☀️ Modo Claro'}
+        </button>
+      </div>
+
       <header className="header">
-        <h1>Plataforma de Organização - ENEM</h1>
-        <p>Projeto de Extensão - 2º Ano do Ensino Médio[cite: 2, 4]</p>
+        <h1>Plataforma ENEM</h1>
+        <p>Organização e Planejamento para o 2º Ano do Ensino Médio</p>
       </header>
 
-      {/* Dashboard de Progresso Geral */}
       <section className="card-dashboard">
         <div className="info-progresso">
-          <span>Progresso Geral no ENEM: <strong>{percentualGeral}%</strong></span>
-          <span>({totalConcluidos} de {totalTopicos} tópicos)</span>
+          <span>Progresso Geral do Edital</span>
+          <span className="porcentagem-destaque">{percentualGeral}% <small style={{ fontSize: '0.8rem', color: 'var(--texto-secundario)' }}>({totalConcluidos}/{totalTopicos})</small></span>
         </div>
         <div className="barra-bg">
           <div className="barra-fill" style={{ width: `${percentualGeral}%` }}></div>
         </div>
       </section>
 
-      {/* Menu Principal de Navegação */}
       <div className="menu-principal">
         <button 
           className={`menu-btn ${abaPrincipal === 'conteudos' ? 'ativo' : ''}`}
           onClick={() => setAbaPrincipal('conteudos')}
         >
-          📚 Conteúdos ENEM
+          📚 Conteúdos
         </button>
         <button 
           className={`menu-btn ${abaPrincipal === 'cronograma' ? 'ativo' : ''}`}
           onClick={() => setAbaPrincipal('cronograma')}
         >
-          📅 Meu Cronograma
+          📅 Cronograma
         </button>
         <button 
           className={`menu-btn ${abaPrincipal === 'pomodoro' ? 'ativo' : ''}`}
           onClick={() => setAbaPrincipal('pomodoro')}
         >
           ⏱️ Timer Foco
+        </button>
+        <button 
+          className={`menu-btn ${abaPrincipal === 'anotacoes' ? 'ativo' : ''}`}
+          onClick={() => setAbaPrincipal('anotacoes')}
+        >
+          📝 Anotações
         </button>
       </div>
 
@@ -90,7 +121,6 @@ function App() {
           </nav>
 
           <main className="conteudo-area">
-            <h2>{enemTopics[areaAtiva].area}</h2>
             {enemTopics[areaAtiva].materias.map((materia, mIndex) => (
               <div key={mIndex} className="card-materia">
                 <h3>{materia.nome}</h3>
@@ -119,6 +149,18 @@ function App() {
 
       {abaPrincipal === 'cronograma' && <Cronograma />}
       {abaPrincipal === 'pomodoro' && <Pomodoro />}
+      {abaPrincipal === 'anotacoes' && (
+        <div className="anotacoes-container">
+          <h2>Bloco de Notas Rápido</h2>
+          <p className="subtitulo">Espaço pessoal para lembretes, fórmulas ou temas de redação.</p>
+          <textarea 
+            className="textarea-anotacoes"
+            placeholder="Digite suas anotações aqui..."
+            value={anotacoes}
+            onChange={(e) => setAnotacoes(e.target.value)}
+          />
+        </div>
+      )}
     </div>
   );
 }

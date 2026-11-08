@@ -59,7 +59,7 @@ export function Pomodoro() {
   return (
     <div className="pomodoro-container">
       <h2>⏱️ Timer de Foco (Pomodoro)</h2>
-      <p className="subtitulo">Estude em blocos de 25 minutos com pausas de 5 minutos para manter a concentração[cite: 3, 6].</p>
+      <p className="subtitulo">Estude em blocos de 25 minutos com pausas de 5 minutos para manter a concentração.</p>
 
       <div className="botoes-modo">
         <button 
