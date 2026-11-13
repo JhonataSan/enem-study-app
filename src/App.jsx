@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { enemTopics } from './data/enemTopics';
 import { Cronograma } from './components/Cronograma';
 import { Pomodoro } from './components/Pomodoro';
+import { CorretorRedacao } from './components/CorretorRedacao';
 import './App.css';
 
 function App() {
@@ -72,7 +73,12 @@ function App() {
       <section className="card-dashboard">
         <div className="info-progresso">
           <span>Progresso Geral do Edital</span>
-          <span className="porcentagem-destaque">{percentualGeral}% <small style={{ fontSize: '0.8rem', color: 'var(--texto-secundario)' }}>({totalConcluidos}/{totalTopicos})</small></span>
+          <span className="porcentagem-destaque">
+            {percentualGeral}%{' '}
+            <small style={{ fontSize: '0.8rem', color: 'var(--texto-secundario)' }}>
+              ({totalConcluidos}/{totalTopicos})
+            </small>
+          </span>
         </div>
         <div className="barra-bg">
           <div className="barra-fill" style={{ width: `${percentualGeral}%` }}></div>
@@ -80,29 +86,35 @@ function App() {
       </section>
 
       <div className="menu-principal">
-        <button 
+        <button
           className={`menu-btn ${abaPrincipal === 'conteudos' ? 'ativo' : ''}`}
           onClick={() => setAbaPrincipal('conteudos')}
         >
           📚 Conteúdos
         </button>
-        <button 
+        <button
           className={`menu-btn ${abaPrincipal === 'cronograma' ? 'ativo' : ''}`}
           onClick={() => setAbaPrincipal('cronograma')}
         >
           📅 Cronograma
         </button>
-        <button 
+        <button
           className={`menu-btn ${abaPrincipal === 'pomodoro' ? 'ativo' : ''}`}
           onClick={() => setAbaPrincipal('pomodoro')}
         >
           ⏱️ Timer Foco
         </button>
-        <button 
+        <button
           className={`menu-btn ${abaPrincipal === 'anotacoes' ? 'ativo' : ''}`}
           onClick={() => setAbaPrincipal('anotacoes')}
         >
           📝 Anotações
+        </button>
+        <button
+          className={`menu-btn ${abaPrincipal === 'redacao' ? 'ativo' : ''}`}
+          onClick={() => setAbaPrincipal('redacao')}
+        >
+          ✍️ Redação IA
         </button>
       </div>
 
@@ -110,8 +122,8 @@ function App() {
         <>
           <nav className="abas-container">
             {enemTopics.map((item, index) => (
-              <button 
-                key={index} 
+              <button
+                key={index}
                 className={`aba-btn ${areaAtiva === index ? 'ativa' : ''}`}
                 onClick={() => setAreaAtiva(index)}
               >
@@ -130,10 +142,10 @@ function App() {
                     return (
                       <li key={tIndex} className={estaFeito ? 'topico-concluido' : ''}>
                         <label>
-                          <input 
-                            type="checkbox" 
-                            checked={estaFeito} 
-                            onChange={() => alternarTopico(topico)} 
+                          <input
+                            type="checkbox"
+                            checked={estaFeito}
+                            onChange={() => alternarTopico(topico)}
                           />
                           <span>{topico}</span>
                         </label>
@@ -153,7 +165,7 @@ function App() {
         <div className="anotacoes-container">
           <h2>Bloco de Notas Rápido</h2>
           <p className="subtitulo">Espaço pessoal para lembretes, fórmulas ou temas de redação.</p>
-          <textarea 
+          <textarea
             className="textarea-anotacoes"
             placeholder="Digite suas anotações aqui..."
             value={anotacoes}
@@ -161,6 +173,8 @@ function App() {
           />
         </div>
       )}
+
+      {abaPrincipal === 'redacao' && <CorretorRedacao />}
     </div>
   );
 }

@@ -395,3 +395,113 @@ html, body {
   font-size: 0.9rem;
   box-sizing: border-box;
 }
+/* Corretor de Redação */
+.corretor-container {
+  background: var(--bg-card);
+  border: 1px solid var(--borda);
+  padding: 24px 18px;
+  border-radius: 16px;
+  box-shadow: var(--sombra);
+}
+
+.corretor-container h2 {
+  color: var(--texto-principal);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.campo-tema {
+  margin-bottom: 16px;
+}
+
+.campo-tema label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--texto-secundario);
+}
+
+.input-tema {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  background: var(--bg-input);
+  color: var(--texto-principal);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.upload-box {
+  border: 2px dashed var(--borda);
+  border-radius: 12px;
+  padding: 25px 15px;
+  text-align: center;
+  background: var(--bg-card-subtle);
+}
+
+.btn-upload {
+  display: inline-block;
+  background: var(--cor-primaria);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.preview-redacao {
+  max-width: 100%;
+  max-height: 280px;
+  border-radius: 8px;
+  border: 1px solid var(--borda);
+}
+
+.btn-corrigir {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--cor-primaria), #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-corrigir:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.msg-erro {
+  color: #ef4444;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.resultado-correcao {
+  margin-top: 25px;
+  padding: 20px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+.resultado-correcao h3 {
+  margin-top: 0;
+  color: var(--cor-primaria);
+}
+
+.texto-resultado {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 0.92rem;
+  color: var(--texto-principal);
+}
