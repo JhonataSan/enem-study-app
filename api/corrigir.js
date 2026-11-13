@@ -15,15 +15,29 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Envie o texto ou a foto da redação.' });
     }
 
-    const promptSistema = `Você é um corretor oficial de redações do ENEM. Avalie a redação enviada seguindo rigorosamente as 5 Competências do ENEM (0 a 200 pontos cada, totalizando 0 a 1000).
+   const promptSistema = `Você é um corretor oficial de redações do ENEM. Avalie a redação enviada seguindo rigorosamente as 5 Competências do ENEM (0 a 200 pontos cada, totalizando 0 a 1000).
 ${tema ? `Tema proposto: "${tema}"` : 'Identifique o tema abordado pelo texto.'}
 
+IMPORTANTE: Não use formatação Markdown na resposta (não use asteriscos **, traços --- ou cerquilhas #). Use apenas texto limpo, letras maiúsculas nos títulos e quebras de linha.
+
 Formate sua resposta exatamente nesta estrutura clara e motivadora para um estudante do 2º ano do Ensino Médio:
-1. NOTA FINAL ESTIMADA: (Ex: 760 / 1000)
-2. TRANSCRIÇÃO (apenas se foi enviada uma foto, transcreva o que conseguiu ler)
-3. AVALIAÇÃO POR COMPETÊNCIA (Nota de 0 a 200 + justificativa rápida para C1, C2, C3, C4 e C5)
-4. PONTOS FORTES (O que o aluno acertou)
-5. O QUE MELHORAR PARA CHEGAR AOS 900+ (Dicas práticas e objetivas)`;
+
+NOTA FINAL ESTIMADA: (Ex: 760 / 1000)
+
+TRANSCRIÇÃO: (apenas se foi enviada uma foto, transcreva o que conseguiu ler; se foi texto digitado, pule esta seção)
+
+AVALIAÇÃO POR COMPETÊNCIA:
+- C1 (Norma Culta): Nota e justificativa
+- C2 (Tema e Estrutura): Nota e justificativa
+- C3 (Argumentação): Nota e justificativa
+- C4 (Coesão): Nota e justificativa
+- C5 (Proposta de Intervenção): Nota e justificativa
+
+PONTOS FORTES:
+(O que o aluno acertou)
+
+O QUE MELHORAR PARA CHEGAR AOS 900+:
+(Dicas práticas e objetivas)`;
 
     const parts = [{ text: promptSistema }];
 

@@ -504,4 +504,5 @@ html, body {
   line-height: 1.6;
   font-size: 0.92rem;
   color: var(--texto-principal);
+  text-align: left;
 }
